@@ -11,7 +11,9 @@ const test = `
 
 const lines = input.trim().split("\n");
 let counter = 0;
+let countOverlap = 0;
 let response = false;
+let responseTwo = false;
 
 lines.forEach((line) => {
   const [partOne, partTwo] = line.trim().split(",");
@@ -21,12 +23,17 @@ lines.forEach((line) => {
 
   if (rangeOne.length >= rangeTwo.length) {
     response = checkContain(rangeOne, rangeTwo);
+    responseTwo = checkOverlap(rangeOne, rangeTwo);
   } else {
     response = checkContain(rangeTwo, rangeOne);
+    responseTwo = checkOverlap(rangeTwo, rangeOne);
   }
 
   if (response) {
     counter++;
+  }
+  if (responseTwo) {
+    countOverlap++;
   }
 });
 
@@ -45,4 +52,10 @@ function checkContain(mainRange, subRange) {
   return subRange.every((element) => mainRange.includes(element));
 }
 
+function checkOverlap(mainRange, subRange) {
+  responseTwo = false;
+  return subRange.some((element) => mainRange.includes(element));
+}
+
 console.log("The counter is: " + counter);
+console.log("The countOverlap is: " + countOverlap);
